@@ -1,6 +1,7 @@
 package com.master.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,41 +26,48 @@ public class Controllerp {
         this.proSer = productService;
 	}
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@RequestMapping("/")
     String index(){
         return "index";
     }
 	
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping(value = "/productos", method = RequestMethod.GET)
     public String lista(Model model){
         model.addAttribute("productos", proSer.listaproductos());
         return "lista";
     }
-
+	
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
     @RequestMapping("producto/{codigo}")
     public String mostrarproducto(@PathVariable Integer codigo, Model model){
         model.addAttribute("producto", proSer.getproductoid(codigo));
         return "verproductoingr";
     }
-
+	
+	@Secured({"ROLE_ADMIN"})
     @RequestMapping("producto/nuevo")
     public String productonuevo(Model model){
         model.addAttribute("producto", new Producto());
         return "nuevo";
     }
 
+	@Secured({"ROLE_ADMIN"})
     @RequestMapping(value = "producto", method = RequestMethod.POST)
     public String saveProduct(Producto prod){
     	proSer.guardarproducto(prod);
     	return "exito";
     }
-
+	
+	@Secured({"ROLE_ADMIN"})
     @RequestMapping("producto/borrar/{codigo}")
     public String borrar(@PathVariable Integer codigo){
     	proSer.borrarproducto(codigo);
         return "redirect:/productos";
     }
     
+	@Secured({"ROLE_ADMIN"})
     @RequestMapping("producto/editar/{codigo}")
     public String editar(@PathVariable Integer codigo, Model model){
         model.addAttribute("producto", proSer.getproductoid(codigo));

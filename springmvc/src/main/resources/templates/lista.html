@@ -17,7 +17,7 @@
 		<div class="col-3 menu">
 			<ul>
 				<li><a href="/" th:text="#{home}"></a></li>
-				<li><a href="/producto/nuevo" th:text="#{newprod}"></a></li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/producto/nuevo" th:text="#{newprod}"></a></li>
 			</ul>
 		</div>
 		<div class="col-9">
@@ -29,8 +29,8 @@
 		                <th th:text="#{name}"></th>
 		                <th th:text="#{description}"></th>
 		                <th th:text="#{price}"></th> 
-		                <th></th> 
-		                <th></th> 
+		                <th sec:authorize="hasRole('ROLE_ADMIN')"></th> 
+		                <th sec:authorize="hasRole('ROLE_ADMIN')"></th> 
 		                <th></th>
 		            </tr>
 		            <tr th:each="producto : ${productos}">
@@ -38,8 +38,8 @@
 		                <td th:text="${producto.nombre}"></td>
 		                <td th:text="${producto.descripcion}"></td>
 		                <td th:text="' $ ' + ${producto.precio}"></td>
-		                <td><a th:href="${'/producto/editar/' + producto.codigo}" th:text="#{edit}"></a></td>
-		                <td><a th:href="${'/producto/borrar/' + producto.codigo}" th:text="#{delete}"></a></td>
+		                <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/producto/editar/' + producto.codigo}" th:text="#{edit}"></a></td>
+		                <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="${'/producto/borrar/' + producto.codigo}" th:text="#{delete}"></a></td>
 		                <td><a th:href="${'/producto/' + producto.codigo}" th:text="#{view}"></a></td>
 		            </tr>
 		        </table>

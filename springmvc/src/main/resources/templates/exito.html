@@ -18,7 +18,7 @@
 		<div class="col-3 menu">
 			<ul>
 				<li><a href="/productos" th:text="#{listprod}"></a></li>
-				<li><a href="/producto/nuevo" th:text="#{newprod}"></a></li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')"><a href="/producto/nuevo" th:text="#{newprod}"></a></li>
 			</ul>
 		</div>
 		<div class="col-9">
